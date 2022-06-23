@@ -2,12 +2,10 @@ const bcryptjs = require('bcryptjs');
 
 const User = require('../models/user');
 
-const getUserByName = async(req, res) => {
+const getUserById = async(req, res) => {
 
-    const { name } = req.params;
-
-    const user = await User.findOne({name});
-    console.log(user);
+    const { id } = req.params;
+    const user = await User.findById(id);
     res.json({
         user
     })
@@ -80,17 +78,16 @@ const putUser =  async(req, res) => {
 
 const deleteUser =  async(req, res) => {
 
-    const { id } = req.params
+    const { id } = req.params;
     //Borrado fisicamente
     // const deletedUser = await User.findByIdAndDelete(id);
     const deletedUser = await User.findByIdAndUpdate(id, {status: false});
     
     res.json({
-        id,
         deletedUser
     })
 };
 
 
 
-module.exports = {getUser, postUser, putUser, deleteUser, getUserByName};
+module.exports = {getUser, postUser, putUser, deleteUser, getUserById};
